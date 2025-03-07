@@ -5,11 +5,12 @@ from rxconfig import config
 from Yummy.elements.elements import RxButton, RxLink
 
 
-def navbar_link(text: str, url: str) -> rx.Component:
+def navbar_link(text: str, url: str, disabled: bool = False) -> rx.Component:
     return RxLink(
         RxButton(
             text,
             variant="surface",
+            disabled = disabled,
             style=styles.navbar.navbar_button,
         ),
         href=url,
@@ -32,7 +33,7 @@ def navbar() -> rx.Component:
                     align="center",
                 ),
                 rx.hstack(
-                    navbar_link("Recetas", "/#"),
+                    navbar_link("Recetas", "/#", disabled=True),
                     navbar_link("Menu", "/#"),
                     navbar_link("Lista de la Compra", "/#"),
 
@@ -46,10 +47,10 @@ def navbar() -> rx.Component:
         rx.mobile_and_tablet(
             rx.hstack(
                 rx.hstack(
-                    # rx.image(
-                    #     src=config.favicon,
-                    #     style=styles.navbar.navbar_image_style
-                    # ),
+                    rx.image(
+                        src="/cooking.png",
+                        style=styles.navbar.navbar_image_style
+                    ),
                     rx.heading(
                         config.app_name,
                         style=styles.navbar.navbar_title_style

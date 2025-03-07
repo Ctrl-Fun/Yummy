@@ -12,6 +12,7 @@ from Yummy.components.footer import footer
 from Yummy.components.season_menu import season_menu
 from Yummy.components.episode_view import episode_view
 from Yummy.components.recipes_list import recipes_list
+from Yummy.components.search_component import search_component
 import Yummy.styles.fonts as fonts
 
 
@@ -29,6 +30,7 @@ def index() -> rx.Component:
             rx.vstack(
                 # header(),
                 # tv(),
+                search_component(),
                 recipes_list(),
                 style=styles.body_style,
                 spacing=styles.Size.BIG.value
