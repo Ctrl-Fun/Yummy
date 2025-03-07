@@ -18,13 +18,13 @@ def navbar_link(text: str, url: str) -> rx.Component:
 
 def navbar() -> rx.Component:
     return rx.box(
-        rx.tablet_and_desktop(
+        rx.desktop_only(
             rx.hstack(
                 rx.hstack(
-                    # rx.image(
-                    #     src=config.favicon,
-                    #     style=styles.navbar.navbar_image_style
-                    # ),
+                    rx.image(
+                        src="/cooking.png",
+                        style=styles.navbar.navbar_image_style
+                    ),
                     rx.heading(
                         config.app_name,
                         style=styles.navbar.navbar_title_style
@@ -32,8 +32,10 @@ def navbar() -> rx.Component:
                     align="center",
                 ),
                 rx.hstack(
-                    navbar_link("Home", "/#"),
-                    navbar_link("Wiki", "/wiki"),
+                    navbar_link("Recetas", "/#"),
+                    navbar_link("Menu", "/#"),
+                    navbar_link("Lista de la Compra", "/#"),
+
                     spacing=styles.Size.DEFAULT.value,
                     justify="center",
                     style=styles.navbar.vstack_links_style,
@@ -41,7 +43,7 @@ def navbar() -> rx.Component:
                 align="center",
             ),
         ),
-        rx.mobile_only(
+        rx.mobile_and_tablet(
             rx.hstack(
                 rx.hstack(
                     # rx.image(
@@ -59,8 +61,9 @@ def navbar() -> rx.Component:
                         rx.icon("menu", size=30)
                     ),
                     rx.menu.content(
-                        rx.menu.item("Home"),
-                        rx.menu.item("Wiki"),
+                        rx.menu.item("Recetas"),
+                        rx.menu.item("Menu"),
+                        rx.menu.item("Lista de la Compra"),
                         color_scheme="brown",
                         variant="soft"
                     ),
@@ -70,5 +73,5 @@ def navbar() -> rx.Component:
                 align="center",
             ),
         ),
-        style=styles.navbar.navbar_style
+        style=styles.navbar.navbar_style,
     )
