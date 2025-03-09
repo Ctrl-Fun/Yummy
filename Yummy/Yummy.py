@@ -16,26 +16,6 @@ from Yummy.components.search_component import search_component
 import Yummy.styles.fonts as fonts
 
 
-class State(rx.State):
-    """The app state."""
-    class Users(rx.Model, table=True):
-        username: str
-        email: str
-        password: str
-
-    # with rx.session() as session:
-    #     session.add(
-    #         User(
-    #             username="test",
-    #             email="admin@reflex.dev",
-    #             password="admin",
-    #         )
-    #     )
-    #     session.commit()
-
-    ...
-
-
 def index() -> rx.Component:
     # Welcome Page (Index)
     return rx.box(
