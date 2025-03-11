@@ -1,7 +1,7 @@
 import reflex as rx
 from sqlmodel import select
 
-from base import State, User
+from Yummy.state.base import State, User
 
 class AuthState(State):
     """Login state"""
@@ -14,7 +14,7 @@ class AuthState(State):
         with rx.session() as session:
             user = session.exec(
                 User.select().where(
-                    User.username.contains(self.name)
+                    User.username.contains(self.username)
                 )
             ).first()
             if user and user.password == self.password:
