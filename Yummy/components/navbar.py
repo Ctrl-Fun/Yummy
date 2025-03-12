@@ -3,6 +3,7 @@ import Yummy.styles.styles as styles
 from Yummy.styles.colors import Colors, TextColors
 from rxconfig import config
 from Yummy.elements.elements import RxButton, RxLink
+from Yummy.state.base import State
 
 
 def navbar_link(text: str, url: str, disabled: bool = False) -> rx.Component:
@@ -40,6 +41,12 @@ def navbar() -> rx.Component:
                     spacing=styles.Size.DEFAULT.value,
                     justify="center",
                     style=styles.navbar.vstack_links_style,
+                ),
+                rx.avatar(
+                    # src="/img/uploads/juansito.jpg",
+                    src=State.userPhoto,
+                    radius="full",
+                    fallback="RX",
                 ),
                 align="center",
             ),

@@ -17,9 +17,9 @@ class AuthState(State):
                 )
             ).first()
             if user and user.password == self.password:
-                # print(type(user))
                 self.user = user.id
-                # print(user.id)
+                self.get_user_photo(),
+                # State.get_user_photo()
                 return rx.redirect("/")
             else:
                 return rx.window_alert("Invalid username or password")

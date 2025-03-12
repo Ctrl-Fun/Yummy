@@ -7,6 +7,7 @@ class State(rx.State):
     """Funcionamiento principal de la app (base state)"""
 
     user: int | None = None
+    userPhoto: str | None = None
 
     def logout(self):
         """Log out a user"""
@@ -15,10 +16,18 @@ class State(rx.State):
     
     def check_login(self):
         """Check if a user is logged in."""
-        # print("executing...")
         if not self.logged_in:
             return rx.redirect("/login")
     
+    def get_user_photo(self):
+        if self.user:
+            with rx.session() as session:
+                user = session.exec(
+                    User.select().where(
+                        User.id == self.user
+                    )
+                ).first()
+                self.userPhoto = user.imagepath
     @rx.var
     def logged_in(self) -> bool:
         """Check if a user is logged in."""

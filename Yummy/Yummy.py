@@ -10,6 +10,4 @@ from Yummy.state.base import State
 
 app = rx.App()
 app.add_page(login)
-# print(State.check_login())
-# app.add_page(signup)
 app.add_page(recipes, route="/", on_load=State.check_login())
