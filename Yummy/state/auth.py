@@ -6,7 +6,6 @@ from Yummy.state.base import State, User
 class AuthState(State):
     """Login state"""
     username: str
-    email: str
     password: str
 
     def login(self):
