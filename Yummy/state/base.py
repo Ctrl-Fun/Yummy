@@ -2,6 +2,10 @@
 
 import reflex as rx
 from Yummy.db_model import User
+from pathlib import Path
+
+ASSETS_FOLDER = Path("assets")
+UPLOAD_FOLDER = Path("img/uploads")  # Define la carpeta de destino
 
 class State(rx.State):
     """Funcionamiento principal de la app (base state)"""
