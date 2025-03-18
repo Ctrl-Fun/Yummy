@@ -20,7 +20,7 @@ def search_component():
             RxButton(
                 "Search",
                 # variant="surface",
-                style=styles.navbar.navbar_button,
+                # style=styles.navbar.navbar_button,
             ),
             spacing=styles.Size.DEFAULT.value,
             width="100%",

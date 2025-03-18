@@ -24,9 +24,6 @@ def header() -> rx.Component:
                     "Aquí podrás ver todas tus recetas",
                     color = styles.TextColors.BODY
                 ),
-                # RxText(
-                #     "No has fantaseado con poder ver Los Simpsons 24/7?",
-                # ),
                 spacing=styles.Size.EXTRA_SMALL.value
             ),
             spacing=styles.Size.DEFAULT.value,

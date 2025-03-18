@@ -2,7 +2,7 @@ import reflex as rx
 import Yummy.styles.styles as styles
 from Yummy.styles.colors import Colors, TextColors
 from rxconfig import config
-from Yummy.elements.elements import RxButton, RxLink
+from Yummy.elements.elements import RxButton, RxLink, RxButtonHeader
 from Yummy.state.auth import AuthState
 from Yummy.state.base import State
 
@@ -10,11 +10,11 @@ from Yummy.state.base import State
 
 def navbar_link(text: str, url: str, disabled: bool = False) -> rx.Component:
     return RxLink(
-        RxButton(
+        RxButtonHeader(
             text,
-            variant="surface",
+            variant="soft",
             disabled = disabled,
-            style=styles.navbar.navbar_button,
+            # style=styles.navbar.navbar_button,
         ),
         href=url,
         is_external=False

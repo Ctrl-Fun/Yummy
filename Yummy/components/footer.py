@@ -8,7 +8,8 @@ def social_link(icon: str, href: str) -> rx.Component:
     return RxLink(
         rx.icon(
             icon,
-            style=styles.footer.social_icon_styles
+            style=styles.footer.social_icon_styles,
+            color=TextColors.BODY,
         ),
         href=href,
     )

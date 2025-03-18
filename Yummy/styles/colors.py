@@ -6,11 +6,12 @@ class Colors(Enum):
     SECONDARY = "#A54657"  # Granate suave, más equilibrado con el rojo
     BACKGROUND = "#582630"  # Amarillo más oscuro y menos saturado
 
-    BUTTON_BACKGROUND = "#F4A259"  # Naranja más natural y menos saturado
+    BUTTON_BACKGROUND = "#A54657"  # Naranja más natural y menos saturado
+    BUTTON_BACKGROUND_HEADER = "#582630"  # Naranja más natural y menos saturado
     BUTTON_HOVER = "#E76F51"  # Rojo-anaranjado suave para un buen efecto hover
 
 
 class TextColors(Enum):
     HEADER = "#F7EE7F"  # Un rojo oscuro para que resalte bien sobre el fondo claro
-    BODY = "#F1A66A"  # Rojo oscuro con un tono cálido y suave
+    BODY = "#F7EE7F"  # Rojo oscuro con un tono cálido y suave
     # BLACK = "#2A0A0A"  # Negro con un leve tono rojizo para mantener coherencia
