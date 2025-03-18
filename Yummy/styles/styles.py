@@ -51,18 +51,9 @@ main_page_style = dict(
 
 button = dict(
     color=Colors.PRIMARY.value,
-    _hover={
-        # "cursor": "pointer"
-    },
     _disabled={
-        # "cursor": "not-allowed",  # Cambia el cursor a "no permitido"
         "opacity": 0.6,  # Opcional, opacidad para indicar que está deshabilitado
-        # "pointer-events": "none",  # Evita interacciones con el botón deshabilitado
     },
-    # _hover_disabled={
-    #     "cursor": "not-allowed",  # Si está deshabilitado, aplicar "no permitido" incluso en hover
-    #     "pointer-events": "none"  # Desactivar la interacción incluso cuando está hover
-    # }
 )
 
 # NAVBAR

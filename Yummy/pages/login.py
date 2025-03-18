@@ -25,12 +25,6 @@ def login():
                 rx.button("Log in", on_click=AuthState.login, size="3", width="5em"),
                 spacing="4",
             ),
-            # align_items="left",
-            # background="white",
-            # border="1px solid #eaeaea",
-            # padding="16px",
-            # width="400px",
-            # border_radius="8px",
         ),
         rx.text(
             "No tienes cuenta aún? ",
