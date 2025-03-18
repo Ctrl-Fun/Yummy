@@ -5,3 +5,8 @@ class User(rx.Model, table=True):
     username: str
     password: str
     imagepath: str | None
+
+class Ingrediente(rx.Model, table=True):
+    """Tabla de ingredientes para las recetas"""
+    nombre: str
+    variante: str | None

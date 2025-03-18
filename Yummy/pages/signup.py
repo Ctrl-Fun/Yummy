@@ -27,7 +27,6 @@ def signup():
                     on_blur=AuthState.set_confirm_password,
                     size="3",
                 ),
-                
                 rx.hstack(
                     rx.upload(
                         accept={"image/png","image/jpeg"},

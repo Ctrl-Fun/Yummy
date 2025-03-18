@@ -23,7 +23,7 @@ class State(rx.State):
         if not self.logged_in:
             return rx.redirect("/login")
     
-    def get_user_photo(self):
+    def update_user_photo(self):
         if self.user:
             with rx.session() as session:
                 user = session.exec(
@@ -32,6 +32,7 @@ class State(rx.State):
                     )
                 ).first()
                 self.userPhoto = user.imagepath
+                
     @rx.var
     def logged_in(self) -> bool:
         """Check if a user is logged in."""
