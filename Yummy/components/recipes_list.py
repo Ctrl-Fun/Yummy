@@ -7,7 +7,11 @@ def recipes_list():
     return rx.flex(
         rx.card(
             rx.hstack(
-                rx.image("/img/lisa-feliz.jpg"),
+                rx.image(
+                    "/img/lisa-feliz.jpg",
+                    width=styles.PercentSice.BIG, 
+                    height="auto"
+                    ),
                 rx.vstack(
                     rx.heading("titulo de receta"),
                     rx.text("texto de receta"),

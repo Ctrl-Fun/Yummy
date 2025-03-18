@@ -14,7 +14,7 @@ def recipes():
                 search_component(),
                 recipes_list(),
                 style=styles.body_style,
-                spacing=styles.Size.BIG.value
+                spacing=styles.Size.DEFAULT.value
             ),
         ),
         footer(),

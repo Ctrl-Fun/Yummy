@@ -24,7 +24,7 @@ def RxButton(data, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Co
         size=size,
         background_color=styles.Colors.BUTTON_BACKGROUND,
         disabled=disabled,
-        style={"_hover": {"cursor": "pointer"}},
+        style=styles.button,
     )
 
 def RxButtonHeader(data, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Component:
@@ -33,7 +33,7 @@ def RxButtonHeader(data, size: str = styles.BTN_SIZE, disabled: bool = False) ->
         size=size,
         background_color=styles.Colors.BUTTON_BACKGROUND_HEADER,
         disabled=disabled,
-        style={"_hover": {"cursor": "pointer"}},
+        style=styles.button
     )
 
 def RxSelect(data, color_scheme: str = "brown", variant: str = "soft", size: str = styles.BTN_SIZE, placeholder: str = "Seleccione...", **kwargs) -> rx.Component:

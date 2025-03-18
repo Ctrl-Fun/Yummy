@@ -27,6 +27,12 @@ class EMSize(Enum):
     Extra_4="10em"
     Extra_5="15em"
 
+class PercentSice(Enum):
+    SMALL = "30%"
+    MEDIUM = "50%"
+    BIG = "70%"
+    EXTRA_BIG = "85%"
+
 spacing_values = [4,8,12,16,24,32,40,48,64]
 
 ######## STYLES DESKTOP
@@ -43,6 +49,22 @@ main_page_style = dict(
     minHeight = "100vh",          # Asegura que el fondo cubra toda la pantalla
 )
 
+button = dict(
+    color=Colors.PRIMARY.value,
+    _hover={
+        # "cursor": "pointer"
+    },
+    _disabled={
+        # "cursor": "not-allowed",  # Cambia el cursor a "no permitido"
+        "opacity": 0.6,  # Opcional, opacidad para indicar que está deshabilitado
+        # "pointer-events": "none",  # Evita interacciones con el botón deshabilitado
+    },
+    # _hover_disabled={
+    #     "cursor": "not-allowed",  # Si está deshabilitado, aplicar "no permitido" incluso en hover
+    #     "pointer-events": "none"  # Desactivar la interacción incluso cuando está hover
+    # }
+)
+
 # NAVBAR
 class navbar():
     navbar_style = dict(
@@ -53,11 +75,6 @@ class navbar():
         z_index="999",
         width="100%",
         heigth=EMSize.XL
-    )
-
-    navbar_button = dict(
-        color = Colors.PRIMARY.value,
-        # boxShadow = "none"
     )
 
     navbar_title_style = dict(
@@ -110,44 +127,6 @@ class header():
         margin_left = EMSize.S,
     )
 
-# TV
-class tv():
-    flex = dict(
-        flex_wrap="wrap",
-        width="100%",
-    )
-
-    vstack_style = dict(
-        margin_left = EMSize.S,
-    )
-
-    hstack_container_style = dict(
-        heigth = "100%"
-    ) 
-
-# SEASON MENU
-class season_menu():
-    flex = dict(
-        flex_wrap="wrap",
-        justify_content="center",
-    )
-
-    hstack = dict(
-        width="100%",
-    )
-
-
-# EPISODE VIEW
-class episode_view():
-    header_image_style = dict(
-        width=EMSize.Extra_5, 
-        height="auto"
-    )
-
-    flex = dict(
-        flex_wrap="wrap",
-        justify_content="center",
-    )
 
 
 ######## STYLES MOBILE

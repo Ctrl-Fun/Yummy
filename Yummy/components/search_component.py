@@ -11,19 +11,14 @@ def search_component():
                 size=styles.BTN_SIZE,
                 style={
                     "width": ["100%", "80%", "60%"],  # Se ajusta en móviles, tablets y escritorio
-                    # "padding": "0.5em",
-                    # "border": "1px solid #ccc",
-                    # "border_radius": "8px",
-                    # "outline": "none",
                 },
             ),
             RxButton(
                 "Search",
-                # variant="surface",
-                # style=styles.navbar.navbar_button,
             ),
             spacing=styles.Size.DEFAULT.value,
             width="100%",
+            justify="center"
         ),
         style={
             "display": "flex",

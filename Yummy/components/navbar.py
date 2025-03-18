@@ -12,7 +12,7 @@ def navbar_link(text: str, url: str, disabled: bool = False) -> rx.Component:
     return RxLink(
         RxButtonHeader(
             text,
-            variant="soft",
+            # variant="soft",
             disabled = disabled,
             # style=styles.navbar.navbar_button,
         ),
