@@ -112,6 +112,12 @@ class footer():
         }
     )
 
+# SEARCH COMPONENT
+class search_component():
+    input = dict(
+        width=["100%", "80%", "60%"],  # Ancho adaptable
+    )
+
 # HEADER
 class header():
     avatar_style = dict(

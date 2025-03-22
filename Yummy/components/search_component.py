@@ -9,9 +9,7 @@ def search_component():
             rx.input(
                 placeholder="Buscar...",
                 size=styles.BTN_SIZE,
-                style={
-                    "width": ["100%", "80%", "60%"],  # Se ajusta en móviles, tablets y escritorio
-                },
+                style=styles.search_component.input,
             ),
             RxButton(
                 "Search",

@@ -9,17 +9,7 @@ def auth_layout(*args):
             rx.center(
                 rx.vstack(
                     rx.heading("Bienvenido a Yummy", size="8"),
-                    rx.heading("Inicia sesión o registrate para comenzar", size="8"),
-                    rx.text(
-                        "Revisa el código de la aplicación ",
-                        rx.link(
-                            "aquí",
-                            href="https://github.com/reflex-dev/reflex-examples/tree/main/twitter",
-                        ),
-                        ".",
-                        color="gray",
-                        font_weight="medium",
-                    ),
+                    rx.heading("Inicia sesión o registrate para comenzar", size="8"),   
                     *args,
                     style=styles.body_style,
                 ),
