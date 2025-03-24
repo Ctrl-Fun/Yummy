@@ -32,6 +32,9 @@ class State(rx.State):
                     )
                 ).first()
                 self.userPhoto = user.imagepath
+    
+    # def update_navbar_buttons(self,button,):
+
                 
     @rx.var
     def logged_in(self) -> bool:
