@@ -2,7 +2,7 @@ import reflex as rx
 from Yummy.components.navbar import navbar
 from Yummy.components.footer import footer
 from Yummy.styles import styles
-from Yummy.state.recipesState import RecipesState
+from Yummy.state.recipesState import RecipeSingleState
 
 def single_recipe():
     # Welcome Page (Index)
@@ -10,6 +10,12 @@ def single_recipe():
         navbar(),
         rx.center(
             rx.vstack(
+                rx.text(RecipeSingleState.recipe.id),
+                rx.text(RecipeSingleState.recipe.nombre),
+                rx.text(RecipeSingleState.recipe.variante),
+                rx.text(RecipeSingleState.recipe.creador),
+
+
                 rx.heading("receta: macarrones con chorizo"),
                 rx.text("Ingredientes:"),
                 
