@@ -2,7 +2,7 @@ import reflex as rx
 from sqlmodel import select
 
 from Yummy.state.base import State
-from Yummy.db_model import User, Receta, Ingrediente_Receta, Pasos_Receta, Imagen_Receta
+from Yummy.db_model import User, Receta, Ingrediente_Receta, Pasos_Receta, Imagen_Receta, Ingrediente
 
 class RecipesState(State):
     """Homepage state"""
@@ -19,16 +19,18 @@ class RecipeSingleState(State):
     recipeImages: list[Imagen_Receta] | None
 
     def load_page(self):
-
+        """Prepare recipe data and check the login user status"""
         if(not self.logged_in):
             return rx.redirect("/login")
         
         data = self.router.page.params
         recipe_id = data.get("recipe_id")
+        ingredientRelation =[]
 
         with rx.session() as session:
+            # recipe table data
             self.recipe = session.get(Receta,recipe_id)
-            self.recipeIngredients = session.exec(
+            ingredientRelation = session.exec(
                 select(Ingrediente_Receta).where(Ingrediente_Receta.id_receta==recipe_id)
             ).all()
             self.recipeSteps = session.exec(
@@ -38,3 +40,15 @@ class RecipeSingleState(State):
                 select(Imagen_Receta).where(Pasos_Receta.id_receta == recipe_id)
             ).all()
 
+        ingredient_ids = []
+        for relation in ingredientRelation:
+            ingredient_ids.append(relation.id_ingrediente)
+            
+        with rx.session() as session:
+            # ingredient table data
+            self.recipeIngredients = session.exec(
+                select(Ingrediente).where(Ingrediente.id.in_(ingredient_ids))
+            ).all()
+            
+        print(self.recipeIngredients)
+        print(self.recipe)
