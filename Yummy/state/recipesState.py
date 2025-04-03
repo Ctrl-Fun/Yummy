@@ -14,7 +14,7 @@ class RecipesState(State):
 class RecipeSingleState(State):
     """Singlepage state"""
     recipe: Receta | None
-    recipeIngredients: list[Ingrediente_Receta] | None
+    recipeIngredients: list[Ingrediente] | None
     recipeSteps: list[Pasos_Receta] | None
     recipeImages: list[Imagen_Receta] | None
 
