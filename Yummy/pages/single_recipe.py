@@ -4,22 +4,26 @@ from Yummy.components.footer import footer
 from Yummy.styles import styles
 from Yummy.state.recipesState import RecipeSingleState
 
+def safe_cell(value: str, fallback: str = "-"):
+    return rx.cond(value, rx.table.cell(value), rx.table.cell(fallback))
+
+
 def render_ingredients(ingrediente: dict[str,str]):
     return rx.table.row(
-                rx.table.cell(ingrediente["nombre"]),
-                rx.table.cell(ingrediente["variante"]),
-                rx.table.cell(ingrediente["cantidad"]),
-                rx.table.cell(ingrediente["unidad"])
-            ),
+        safe_cell(ingrediente["nombre"]),
+        safe_cell(ingrediente["variante"]),
+        safe_cell(ingrediente["cantidad"]),
+        safe_cell(ingrediente["unidad"]),
+    )
+
 
 def single_recipe():
     # Welcome Page 
-    print(RecipeSingleState.ingredientsList)
     return rx.box(
         navbar(),
         rx.center(
             rx.vstack(
-                rx.heading(f"Receta: {RecipeSingleState.recipe.nombre}"),
+                rx.heading(RecipeSingleState.recipe.nombre),
 
                 rx.hstack(
                     rx.table.root(
