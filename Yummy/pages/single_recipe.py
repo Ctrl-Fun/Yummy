@@ -4,83 +4,35 @@ from Yummy.components.footer import footer
 from Yummy.styles import styles
 from Yummy.state.recipesState import RecipeSingleState
 
-# def render_ingredients(row):
-    # rx.console_log(row)
-    # pass
-    # return rx.hstack(
-    #     rx.foreach(
-    #         row,
-    #         lambda item: rx.box(
-    #             item.nombre,
-    #         ),
-    #     ),
-    # )
-
-test = [1,2]
+def render_ingredients(ingrediente: dict[str,str]):
+    return rx.table.row(
+                rx.table.cell(ingrediente["nombre"]),
+                rx.table.cell(ingrediente["variante"]),
+                rx.table.cell(ingrediente["cantidad"]),
+                rx.table.cell(ingrediente["unidad"])
+            ),
 
 def single_recipe():
     # Welcome Page 
-    print(RecipeSingleState.recipeIngredients)
-    # for item in RecipeSingleState.recipeIngredients:
-    #     print(item)
+    print(RecipeSingleState.ingredientsList)
     return rx.box(
         navbar(),
         rx.center(
             rx.vstack(
-                rx.text(RecipeSingleState.recipe.id),
-                rx.text(RecipeSingleState.recipe.nombre),
-                rx.text(RecipeSingleState.recipe.variante),
-                rx.text(RecipeSingleState.recipe.creador),
-                
-                
-                
-                # rx.text(RecipeSingleState.recipeIngredients),
-
-
                 rx.heading(f"Receta: {RecipeSingleState.recipe.nombre}"),
-                # rx.foreach(RecipeSingleState.recipeIngredients, single_recipe),
 
-                # rx.text(f"Recipe Ingredients: {[ingredient.nombre for ingredient in RecipeSingleState.recipeIngredients]}"),
-                # rx.foreach(
-                #     RecipeSingleState.recipeIngredients,
-                #     lambda ingredient: rx.text(ingredient.nombre)  # Accediendo correctamente al atributo nombre
-                # ),
-                # rx.foreach(RecipeSingleState.recipeIngredients, render_ingredients),
-                # rx.text(RecipeSingleState.recipeIngredients[0].nombre),
-                # rx.foreach(
-                #         RecipeSingleState.recipeIngredients,
-                #         lambda ingredient: rx.text(
-                #             f"{ingredient.nombre} ({ingredient.variante})" if ingredient.variante else ingredient.nombre
-                #         )
-                #     ),
-                # rx.text("Ingredientes:"),
-                
                 rx.hstack(
                     rx.table.root(
                         rx.table.header(
                             rx.table.row(
                                 rx.table.column_header_cell("Ingrediente"),
-                                rx.table.column_header_cell("Tipo"),
+                                rx.table.column_header_cell("Variante/Tipo"),
                                 rx.table.column_header_cell("Cantidad"),
-                                rx.table.column_header_cell("unidad")
+                                rx.table.column_header_cell("Unidad Medida")
                             )
                         ),
                         rx.table.body(
-                            # rx.text(RecipeSingleState.recipeIngredients),
-                            # rx.foreach(RecipeSingleState.recipeIngredients, lambda ingredient: rx.text(ingredient.nombre)),
-                            
-                            rx.table.row(
-                                rx.table.cell("Tomate"),
-                                rx.table.cell("Rallado"),
-                                rx.table.cell("500"),
-                                rx.table.cell("gramos")
-                            ),
-                            rx.table.row(
-                                rx.table.cell("Ajo"),
-                                rx.table.cell("Diente"),
-                                rx.table.cell("2"),
-                                rx.table.cell("Ud.")
-                            ),
+                            rx.foreach(RecipeSingleState.ingredientsList, render_ingredients),
                         ),
                     ),
                     rx.hstack(
