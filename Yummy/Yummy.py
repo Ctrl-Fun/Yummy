@@ -7,7 +7,7 @@ from Yummy.pages.signup import signup
 from Yummy.pages.recipes import recipes
 from Yummy.pages.single_recipe import single_recipe
 from Yummy.state.base import State
-from Yummy.state.recipesState import RecipeSingleState
+from Yummy.state.recipesState import RecipeSingleState, RecipesState
 from Yummy.styles.theme import theme
 
 
@@ -18,4 +18,4 @@ app = rx.App(
 app.add_page(login)
 app.add_page(signup)
 app.add_page(single_recipe, route="/recipes/[recipe_id]", on_load=RecipeSingleState.load_page)
-app.add_page(recipes, route="/", on_load=State.check_login)
+app.add_page(recipes, route="/", on_load=RecipesState.load_page)
