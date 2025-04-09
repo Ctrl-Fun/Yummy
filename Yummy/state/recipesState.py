@@ -39,7 +39,7 @@ class RecipeSingleState(State):
                 select(Pasos_Receta).where(Pasos_Receta.id_receta == recipe_id)
             ).all()
             self.recipeImages = session.exec(
-                select(Imagen_Receta).where(Pasos_Receta.id_receta == recipe_id)
+                select(Imagen_Receta).where(Imagen_Receta.id_receta == recipe_id)
             ).all()
 
         for i, rel in enumerate(ingredientRelation):

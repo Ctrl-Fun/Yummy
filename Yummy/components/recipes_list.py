@@ -3,6 +3,9 @@ import Yummy.styles.styles as styles
 from Yummy.state.recipesState import RecipesState
 
 
+def recipe_card(recipe):
+    pass
+
 def recipes_list():
     return rx.flex(
         rx.card(

@@ -4,6 +4,7 @@ from Yummy.components.footer import footer
 from Yummy.styles import styles
 from Yummy.state.recipesState import RecipeSingleState
 
+
 def safe_cell(value: str, fallback: str = "-"):
     return rx.cond(value, rx.table.cell(value), rx.table.cell(fallback))
 
@@ -14,6 +15,17 @@ def render_ingredients(ingrediente: dict[str,str]):
         safe_cell(ingrediente["variante"]),
         safe_cell(ingrediente["cantidad"]),
         safe_cell(ingrediente["unidad"]),
+    )
+
+def render_steps(step):
+    return rx.box(
+        rx.heading(f"{step.numero_paso}. {step.descripcion}"),
+    )
+
+def render_image_step(image):
+    return rx.vstack(
+        rx.image(image.image_path),
+        rx.text(f"Descripcion: {image.descripcion}"),
     )
 
 
@@ -44,6 +56,14 @@ def single_recipe():
                         rx.button("Nuevo Ingrediente", color_scheme="blue"),
                         spacing="1"
                     ),
+                ),
+
+                rx.vstack(
+                    rx.foreach(RecipeSingleState.recipeSteps,render_steps),
+                ),
+
+                rx.hstack(
+                    rx.foreach(RecipeSingleState.recipeImages,render_image_step)
                 ),
 
                 style=styles.body_style,
