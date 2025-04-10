@@ -12,6 +12,7 @@ def navbar_link(text: str, url: str, disabled: bool = False) -> rx.Component:
     return RxLink(
         RxButtonHeader(
             text,
+            href=url,
             disabled = disabled,
         ),
         href=url,
@@ -21,8 +22,6 @@ def navbar_link(text: str, url: str, disabled: bool = False) -> rx.Component:
 def navbar() -> rx.Component:
     return rx.box(
         rx.desktop_only(
-            # rx.text(f"User Photo: {State.userPhoto}"),  # Usamos `State.userPhoto()` para acceder al valor real
-            # rx.text(f"User Name: {AuthState.username}"), 
             rx.hstack(
                 rx.hstack(
                     rx.image(
@@ -36,9 +35,9 @@ def navbar() -> rx.Component:
                     align="center",
                 ),
                 rx.hstack(
-                    navbar_link("Recetas", "/#", disabled=True),
-                    navbar_link("Menu", "/#"),
-                    navbar_link("Lista de la Compra", "/#"),
+                    navbar_link("Recetas", "/"),
+                    navbar_link("Menu", "/menu/"),
+                    navbar_link("Lista de la Compra", "/compra"),
 
                     spacing=styles.Size.DEFAULT.value,
                     justify="center",
@@ -57,8 +56,6 @@ def navbar() -> rx.Component:
                     ),
                     rx.menu.content(
                         rx.text("User: "+AuthState.username),
-                        # rx.menu.item("Settings"),
-                        # rx.menu.item("Earnings"),
                         rx.menu.separator(),
                         rx.menu.item("Log out", on_click=State.logout),
                     ),

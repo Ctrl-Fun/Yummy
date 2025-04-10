@@ -56,6 +56,21 @@ button = dict(
     },
 )
 
+navbar_button = dict(
+    color=Colors.PRIMARY.value,
+    _disabled={
+        "opacity": 0.6,  # Opcional, opacidad para indicar que está deshabilitado
+    },
+)
+
+navbar_button_active = dict(
+    color=Colors.PRIMARY.value,
+    border= "1px solid",
+    _disabled={
+        "opacity": 0.6,  # Opcional, opacidad para indicar que está deshabilitado
+    },
+)
+
 # NAVBAR
 class navbar():
     navbar_style = dict(

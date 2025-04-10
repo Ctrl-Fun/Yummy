@@ -1,5 +1,6 @@
 import reflex as rx
 import Yummy.styles.styles as styles
+from Yummy.state.base import State
 
 def RxGrid(data, columns: str = "3", spacing: str = styles.Size.DEFAULT.value, width: str = "100%", **kwargs) -> rx.Component:
     return rx.grid(
@@ -27,14 +28,20 @@ def RxButton(data, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Co
         style=styles.button,
     )
 
-def RxButtonHeader(data, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Component:
+def RxButtonHeader(data: str, href: str, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Component:
     return rx.button(
         data,
         size=size,
-        background_color=styles.Colors.BUTTON_BACKGROUND_HEADER,
         disabled=disabled,
-        style=styles.button
+        background_color=styles.Colors.BUTTON_BACKGROUND_HEADER,
+        # on_click=State.set_active_navbar_button(data),
+        style=rx.cond(
+            State.router.page.path == href,
+            styles.navbar_button_active,
+            styles.navbar_button
+        )
     )
+
 
 def RxSelect(data, color_scheme: str = "brown", variant: str = "soft", size: str = styles.BTN_SIZE, placeholder: str = "Seleccione...", **kwargs) -> rx.Component:
     return rx.select(
