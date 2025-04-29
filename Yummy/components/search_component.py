@@ -1,7 +1,7 @@
 import reflex as rx
 from Yummy.elements.elements import RxButton
 import Yummy.styles.styles as styles
-
+from Yummy.state.recipesState import RecipesState
 
 def search_component():
     return rx.box(
@@ -12,18 +12,14 @@ def search_component():
                 style=styles.search_component.input,
             ),
             RxButton(
-                "Search",
+                "Buscar",
+            ),
+            RxButton(
+                "Añadir Receta",
+                on_click=RecipesState.add_recipe
             ),
             spacing=styles.Size.DEFAULT.value,
             width="100%",
             justify="center"
         ),
-        style={
-            "display": "flex",
-            "justify_content": "center",
-            "align_items": "center",
-            "width": "100%",
-            "max_width": "600px",
-            "margin": "1em auto",
-        },
     )

@@ -19,13 +19,14 @@ def RxLink(data, href: str, is_external: bool = True, **kwargs) -> rx.Component:
         **kwargs
     )
 
-def RxButton(data, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Component:
+def RxButton(data, size: str = styles.BTN_SIZE, disabled: bool = False, on_click: rx.event = None) -> rx.Component:
     return rx.button(
         data,
         size=size,
         background_color=styles.Colors.BUTTON_BACKGROUND,
         disabled=disabled,
         style=styles.button,
+        on_click=on_click,
     )
 
 def RxButtonHeader(data: str, href: str, size: str = styles.BTN_SIZE, disabled: bool = False) -> rx.Component:

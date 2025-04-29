@@ -3,6 +3,7 @@ from sqlmodel import select, desc
 
 from Yummy.state.base import State
 from Yummy.db_model import User, Receta, Ingrediente_Receta, Pasos_Receta, Imagen_Receta, Ingrediente
+import sqlalchemy
 
 class RecipesState(State):
     """Homepage state"""
@@ -41,6 +42,9 @@ class RecipesState(State):
 
     def get_recipe(self, id):
         return rx.redirect(f"/recipes/{id}")
+    
+    def add_recipe(self):
+        return rx.redirect("/add_recipe")
     
 
 class RecipeSingleState(State):
@@ -83,3 +87,46 @@ class RecipeSingleState(State):
             ingrediente_item["cantidad"] = rel.cantidad
             ingrediente_item["unidad"] = rel.unidad
             self.ingredientsList.append(ingrediente_item)
+
+
+class AddRecipe(State):
+    # Lista de elementos seleccionados/agregados
+    items: list[str] = []
+    
+    # Elemento actual seleccionado o escrito
+    current_item: str = ""
+
+    ingredientes: list[dict[str,str]]
+
+    def load_page(self):
+
+        if(not self.logged_in):
+            return rx.redirect("/login")
+        
+        with rx.session() as session:
+            # recipe table data
+            self.ingredientes = session.exec(select(Ingrediente)).all()
+            resultados = session.exec(
+                sqlalchemy.text(
+            """
+                    SELECT
+                        nombre,
+                        GROUP_CONCAT(COALESCE(variante, ''), ', ') AS variantes
+                    FROM ingrediente
+                    GROUP BY nombre
+                """
+                                )).all()
+            # self.ingredientes_agrupados = resultados
+
+        # print(self.ingredientes)
+        print(resultados)
+
+    def add_item(self):
+        print("additem...")
+        if self.current_item and self.current_item not in self.items:
+            self.items.append(self.current_item)
+            self.current_item = ""
+        print(self.items)
+    
+    def remove_item(self, item: str):
+        self.items = [i for i in self.items if i != item]
