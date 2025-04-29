@@ -36,7 +36,7 @@ def navbar() -> rx.Component:
                 ),
                 rx.hstack(
                     navbar_link("Recetas", "/"),
-                    navbar_link("Menu", "/menu/"),
+                    navbar_link("Menu", "/menu"),
                     navbar_link("Lista de la Compra", "/compra"),
 
                     spacing=styles.Size.DEFAULT.value,

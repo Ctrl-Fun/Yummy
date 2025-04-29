@@ -88,15 +88,18 @@ class RecipeSingleState(State):
             ingrediente_item["unidad"] = rel.unidad
             self.ingredientsList.append(ingrediente_item)
 
+        # print(self.ingredientsList)
+
 
 class AddRecipe(State):
     # Lista de elementos seleccionados/agregados
-    items: list[str] = []
+    items: list[dict[str, list[str]]]  = []
     
     # Elemento actual seleccionado o escrito
     current_item: str = ""
 
-    ingredientes: list[dict[str,str]]
+    # ingredientes: list[dict[str,list]]
+    ingredientes: list[str]
 
     def load_page(self):
 
@@ -105,27 +108,37 @@ class AddRecipe(State):
         
         with rx.session() as session:
             # recipe table data
-            self.ingredientes = session.exec(select(Ingrediente)).all()
-            resultados = session.exec(
+            # result = session.exec(select(Ingrediente)).all()
+            result = session.exec(
                 sqlalchemy.text(
-            """
-                    SELECT
-                        nombre,
-                        GROUP_CONCAT(COALESCE(variante, ''), ', ') AS variantes
-                    FROM ingrediente
-                    GROUP BY nombre
-                """
-                                )).all()
-            # self.ingredientes_agrupados = resultados
+                    """
+                        SELECT DISTINCT nombre
+                        FROM ingrediente;
 
-        # print(self.ingredientes)
-        print(resultados)
+                    """
+                )
+            ).all()
+
+        self.ingredientes = [item[0] for item in result]
+
+
 
     def add_item(self):
-        print("additem...")
-        if self.current_item and self.current_item not in self.items:
-            self.items.append(self.current_item)
-            self.current_item = ""
+        # if self.current_item and self.current_item not in self.items:
+        with rx.session() as session:
+            result = session.exec(
+                select(Ingrediente.variante).where(
+                    Ingrediente.nombre.contains(self.current_item)
+                )
+            ).all()
+
+        variantes = [item if item is not None else "-" for item in result]
+        ingrediente = {
+            "nombre": self.current_item,
+            "variantes": variantes
+        }
+
+        self.items.append(ingrediente)
         print(self.items)
     
     def remove_item(self, item: str):
