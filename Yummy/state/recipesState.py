@@ -98,8 +98,11 @@ class AddRecipe(State):
     # Elemento actual seleccionado o escrito
     current_item: str = ""
 
-    # ingredientes: list[dict[str,list]]
     ingredientes: list[str]
+
+    current_step: str = ""
+
+    steps: list[str] = []
 
     def load_page(self):
 
@@ -108,20 +111,14 @@ class AddRecipe(State):
         
         with rx.session() as session:
             # recipe table data
-            # result = session.exec(select(Ingrediente)).all()
             result = session.exec(
-                sqlalchemy.text(
-                    """
+                sqlalchemy.text("""
                         SELECT DISTINCT nombre
-                        FROM ingrediente;
-
-                    """
-                )
-            ).all()
+                        FROM ingrediente
+                        ORDER BY nombre ASC;
+                """)).all()
 
         self.ingredientes = [item[0] for item in result]
-
-
 
     def add_item(self):
         # if self.current_item and self.current_item not in self.items:
@@ -139,7 +136,13 @@ class AddRecipe(State):
         }
 
         self.items.append(ingrediente)
-        print(self.items)
     
     def remove_item(self, item: str):
         self.items = [i for i in self.items if i != item]
+
+    def add_step(self):
+        if(self.current_step != ""):
+            self.steps.append(self.current_step)
+
+    def remove_step(self, step: str):
+        self.steps = [i for i in self.steps if i != step]
