@@ -25,6 +25,17 @@ def render_step(step: str, index:int):
         rx.button("Eliminar",on_click=AddRecipe.remove_step(step))
     )
 
+def render_photo_list(photo: list):
+    return rx.hstack(
+        rx.foreach(
+            photo,
+            rx.text
+        ),
+        rx.button(
+            "Eliminar", 
+            on_click=AddRecipe.delete_image_preview(photo)
+        )
+    )
 
 def recipe_form():
     return rx.box(
@@ -84,6 +95,45 @@ def recipe_form():
                     lambda step, index: render_step(step, index),
                 ),
                 spacing=styles.Size.DEFAULT.value
+            ),
+            rx.vstack(
+                rx.heading("Fotos:"),
+                rx.hstack(
+                    rx.upload(
+                        accept={"image/png","image/jpeg"},
+                        max_files=1,
+                        multiple=False,
+                        id="step_photo",  
+                    ),
+                    rx.vstack(
+                        rx.hstack(
+                            rx.select(
+                                AddRecipe.steps,
+                                placeholder="Paso",
+                                value=AddRecipe.photo_step,
+                                on_change=AddRecipe.set_photo_step,
+                            ),
+                            rx.input(
+                                placeholder="Nombre",
+                                value=AddRecipe.photo_name,  # Estado que refleja el valor actual
+                                on_change=AddRecipe.set_photo_name
+                            ),
+                            rx.button(
+                                "Agregar",
+                                on_click=AddRecipe.step_image_preview(rx.selected_files("step_photo")),
+                            ),
+                        ),
+                        rx.vstack(
+                            rx.foreach(
+                                AddRecipe.photos, render_photo_list
+                            )
+                        ),
+                    ),
+                ),
+            ),
+            rx.button(
+                "Upload",
+                on_click=AddRecipe.handle_upload(rx.upload_files(upload_id="step_photo"))
             ),
             spacing=styles.Size.DEFAULT.value,
         ),

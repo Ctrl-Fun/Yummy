@@ -102,7 +102,15 @@ class AddRecipe(State):
 
     current_step: str = ""
 
+    current_image: str = ""
+
     steps: list[str] = []
+
+    photo_step: str = ""
+    
+    photos: list[list] = []
+
+    photo_name: str = ""
 
     def load_page(self):
 
@@ -143,6 +151,23 @@ class AddRecipe(State):
     def add_step(self):
         if(self.current_step != ""):
             self.steps.append(self.current_step)
+            self.current_step = ""
 
     def remove_step(self, step: str):
         self.steps = [i for i in self.steps if i != step]
+
+    def step_image_preview(self, file):
+        if(file[0] != ""):
+            self.photos.append([file[0], self.photo_step, self.photo_name])
+            print(self.photos)
+
+    def delete_image_preview(self, file):
+        if(file in self.photos):
+            self.photos.remove(file)
+        
+    @rx.event
+    async def handle_upload(self, files: list[rx.UploadFile]):
+        for file in files:
+            upload_data = await file.read()
+            # print(upload_data)
+            # outfile = rx.get_upload_dir
