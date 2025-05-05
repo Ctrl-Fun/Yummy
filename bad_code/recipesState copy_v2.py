@@ -95,7 +95,6 @@ class AddRecipe(State):
     current_item: str = ""
     ingredientes: list[str]
     items: list[dict[str, list[str]]] = []
-    ingrediente_id: int = 0
 
     current_step: str = ""
     steps: list[str] = []
@@ -129,13 +128,6 @@ class AddRecipe(State):
         self.ingredientes = [item[0] for item in result]
 
     def add_item(self):
-        # print(self.current_item)
-        if(not self.current_item):
-            return rx.toast.info(
-                "Selecciona algún ingrediente",
-                position="bottom-right",
-            )
-
         with rx.session() as session:
             result = session.exec(
                 select(Ingrediente.variante).where(
@@ -145,19 +137,13 @@ class AddRecipe(State):
 
         variantes = [item if item is not None else "-" for item in result]
         ingrediente = {
-            "id": self.ingrediente_id,
             "nombre": self.current_item,
             "variantes": variantes
         }
 
-        self.ingrediente_id += 1
-
         self.items.append(ingrediente)
-        print(self.items)
 
     def remove_item(self, item: str):
-        print(item)
-        print(self.items)
         self.items = [i for i in self.items if i != item]
 
     def add_step(self):
@@ -175,33 +161,28 @@ class AddRecipe(State):
             self.disabled_upload_button = True
 
     @rx.event
-    def handle_submit(self, form_data: dict):
-        print(form_data)
-        for field in self.required_fields:
-            if(not form_data[field] or form_data[field] == ""):
-                return rx.toast.info(
-                    F"El campo {field} es obligatorio",
-                    position="bottom-right",
-                )
+    def handle_submit(self, files: list[rx.UploadFile]):
+        files = rx.get_upload_files("step_photo")
+        print(files)
+        # print(form_data)
+        print(files)
+        # for field in self.required_fields:
+        #     if(not form_data[field] or form_data[field] == ""):
+        #         return rx.toast.info(
+        #             F"El campo {field} es obligatorio",
+        #             position="bottom-right",
+        #         )
         
-    # @rx.event
-    # def add_field(self, form_data: dict):
-    #     new_field = form_data.get("new_field")
-    #     if not new_field:
-    #         return
-    #     field_name = (
-    #         new_field.strip().lower().replace(" ", "_")
-    #     )
-    #     self.form_fields.append(field_name)
 
-    # @rx.event
-    # async def handle_upload(self, files: list[rx.UploadFile]):
-    #     print("upload...")
-    #     for file in files:
-    #         upload_data = await file.read()
-    #         outfile = rx.get_upload_dir() / file.filename
 
-    #         with outfile.open("wb") as file_object:
-    #             file_object.write(upload_data)
+    @rx.event
+    async def handle_upload(self, files: list[rx.UploadFile]):
+        print("upload...")
+        for file in files:
+            upload_data = await file.read()
+            outfile = rx.get_upload_dir() / file.filename
 
-    #         self.img.append(file.filename)
+            with outfile.open("wb") as file_object:
+                file_object.write(upload_data)
+
+            self.img.append(file.filename)
