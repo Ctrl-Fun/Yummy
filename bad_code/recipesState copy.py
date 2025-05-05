@@ -92,36 +92,56 @@ class RecipeSingleState(State):
 
 
 class AddRecipe(State):
+    # Lista de elementos seleccionados/agregados
+    items: list[dict[str, list[str]]]  = []
+    
+    # Elemento actual seleccionado o escrito
     current_item: str = ""
+
     ingredientes: list[str]
-    items: list[dict[str, list[str]]] = []
 
     current_step: str = ""
+
+    current_image: str = ""
+
     steps: list[str] = []
 
+    photo_step: str = ""
+
     current_photo_step: str = ""
-    current_photo_name: str = ""
+    
     photos: list[list] = []
 
-    disabled_upload_button: bool = True
-    img: list[str] = []
+    photo_name: str = ""
+
+    current_photo_name: str = ""
+
+    disabled_upload_button : bool = True
+
+    img: list[str]
+
+    # show_upload: bool = False  # Empieza oculto
+
+    uploaded_files: list[str] = []
 
     def load_page(self):
-        if not self.logged_in:
-            return rx.redirect("/login")
 
+        if(not self.logged_in):
+            return rx.redirect("/login")
+        
         with rx.session() as session:
+            # recipe table data
             result = session.exec(
                 sqlalchemy.text("""
-                    SELECT DISTINCT nombre
-                    FROM ingrediente
-                    ORDER BY nombre ASC;
-                """)
-            ).all()
+                        SELECT DISTINCT nombre
+                        FROM ingrediente
+                        ORDER BY nombre ASC;
+                """)).all()
 
         self.ingredientes = [item[0] for item in result]
 
     def add_item(self):
+        # if self.current_item and self.current_item not in self.items:
         with rx.session() as session:
             result = session.exec(
                 select(Ingrediente.variante).where(
@@ -136,31 +156,52 @@ class AddRecipe(State):
         }
 
         self.items.append(ingrediente)
-
+    
     def remove_item(self, item: str):
         self.items = [i for i in self.items if i != item]
 
     def add_step(self):
-        if self.current_step != "":
+        if(self.current_step != ""):
             self.steps.append(self.current_step)
             self.current_step = ""
 
     def remove_step(self, step: str):
         self.steps = [i for i in self.steps if i != step]
 
+    # def step_image_preview(self, file):
+    #     if(file[0] != ""):
+    #         self.photos.append([file[0], self.photo_step, self.photo_name])
+    #         self.disabled_upload_button = False
+    #         print(self.photos)
+
+    def step_image_preview(self):
+        self.photo_name = self.current_photo_name
+        self.photo_step = self.current_photo_step
+        self.show_upload = True
+
+    def hide_upload(self):
+        self.show_upload = False
+
     def delete_image_preview(self, file):
-        if file in self.photos:
+        if(file in self.photos):
             self.photos.remove(file)
-        if len(self.photos) == 0:
+        if(len(self.photos) == 0):
             self.disabled_upload_button = True
 
     @rx.event
     async def handle_upload(self, files: list[rx.UploadFile]):
+        """Handle the upload of file(s).
+
+        Args:
+            files: The uploaded files.
+        """
         for file in files:
             upload_data = await file.read()
             outfile = rx.get_upload_dir() / file.filename
 
+            # Save the file.
             with outfile.open("wb") as file_object:
                 file_object.write(upload_data)
 
+            # Update the img var.
             self.img.append(file.filename)

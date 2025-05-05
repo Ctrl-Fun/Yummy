@@ -99,33 +99,78 @@ def recipe_form():
             rx.vstack(
                 rx.heading("Fotos:"),
                 rx.hstack(
-                    rx.upload(
-                        rx.text("Sube una o varias fotos A LA VEZ (INCOMPATIBILIDAD CON NO SIMULTANEIDAD DE REFLEX)"),
-                        accept={"image/png", "image/jpeg"},
-                        max_files=5,
-                        multiple=True,
-                        id="step_photo",
-                    ),
+                    # rx.cond(
+
+                        # AddRecipe.show_upload,
+                rx.upload(
+                    rx.text("Sube una foto"),
+                    accept={"image/png", "image/jpeg"},
+                    max_files=5,
+                    multiple=True,
+                    id="step_photo",
+                ),
+                        # rx.box()  # Elemento vacío si está oculto
+                    # ),
                     rx.vstack(
-                        rx.foreach(
-                            rx.selected_files("step_photo"), 
-                            lambda filename: rx.hstack(
-                                rx.text(filename),
-                                rx.input(placeholder="Nombre"),
-                                rx.select(
-                                    AddRecipe.steps,
-                                    placeholder="Paso",
-                                ),
-                                rx.button("Borrar"),
+                        # rx.hstack(
+                        #     rx.select(
+                        #         AddRecipe.steps,
+                        #         placeholder="Paso",
+                        #         value=AddRecipe.current_photo_step,
+                        #         on_change=AddRecipe.set_current_photo_step,
+                        #     ),
+                        #     rx.input(
+                        #         placeholder="Nombre",
+                        #         value=AddRecipe.current_photo_name,  # Estado que refleja el valor actual
+                        #         on_change=AddRecipe.set_current_photo_name
+                        #     ),
+                        #     rx.button(
+                        #         "Agregar",
+                        #         on_click=AddRecipe.step_image_preview(rx.selected_files("step_photo")),
+                        #     ),
+                        # ),
+                        # rx.vstack(
+                        #     rx.foreach(
+                        #         AddRecipe.photos, render_photo_list
+                        #     )
+                        # ),
+                        rx.vstack(
+                            rx.foreach(
+                                rx.selected_files("step_photo"), 
+                                lambda filename: rx.hstack(
+                                    rx.text(filename),
+                                    # rx.text(AddRecipe.photo_step),
+                                    # rx.text(AddRecipe.photo_name),
+                                    rx.input(placeholder="Nombre"),
+                                    rx.select(
+                                        AddRecipe.steps,
+                                        placeholder="Paso",
+                                        # value=AddRecipe.current_photo_step,
+                                        # on_change=AddRecipe.set_current_photo_step,
+                                    ),
+                                    rx.button("Borrar"),
+                                    # rx.call(AddRecipe.hide_upload),
+                                    # AddRecipe.show_upload = False
+                                )
                             )
-                        )
+                        ),
                     ),
+                   
                 ),
             ),
             rx.button(
-                "Subir",
+                "Upload",
                 on_click=AddRecipe.handle_upload(rx.upload_files(upload_id="step_photo")),
                 disabled=AddRecipe.disabled_upload_button
+            ),
+            rx.foreach(
+                AddRecipe.img,
+                lambda img: rx.hstack(
+                    rx.image(
+                        src=rx.get_upload_url(img)
+                    ),
+                    rx.button("delete"),
+                ),
             ),
             spacing=styles.Size.DEFAULT.value,
         ),
