@@ -104,7 +104,13 @@ class AddRecipe(State):
     photos: list[list] = []
 
     disabled_upload_button: bool = True
+    disabled_upload_button: bool = False
     img: list[str] = []
+
+    required_fields: list[str] = [
+        "recipe_name",
+        "recipe_variant"
+    ]
 
     def load_page(self):
         if not self.logged_in:
@@ -155,7 +161,23 @@ class AddRecipe(State):
             self.disabled_upload_button = True
 
     @rx.event
+    def handle_submit(self, files: list[rx.UploadFile]):
+        files = rx.get_upload_files("step_photo")
+        print(files)
+        # print(form_data)
+        print(files)
+        # for field in self.required_fields:
+        #     if(not form_data[field] or form_data[field] == ""):
+        #         return rx.toast.info(
+        #             F"El campo {field} es obligatorio",
+        #             position="bottom-right",
+        #         )
+        
+
+
+    @rx.event
     async def handle_upload(self, files: list[rx.UploadFile]):
+        print("upload...")
         for file in files:
             upload_data = await file.read()
             outfile = rx.get_upload_dir() / file.filename
